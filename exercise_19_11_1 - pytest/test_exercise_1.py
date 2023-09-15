@@ -1,4 +1,4 @@
-from exercise import Television
+from exercise_1 import Television
 """
 class Television:
 - fields:
