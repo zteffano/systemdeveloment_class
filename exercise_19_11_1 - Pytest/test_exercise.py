@@ -1,3 +1,4 @@
+from exercise import Television
 """
 class Television:
 - fields:
@@ -56,7 +57,7 @@ def test_chUp():
     tvObj.chUp()
 
     #ASSERT
-    assert tvObj.chUp == 2
+    assert tvObj.channel == 2
 
 def test_chDown():
     #ARRANGE
@@ -66,7 +67,7 @@ def test_chDown():
     tvObj.chDown()
 
     #ASSERT
-    assert tvObj.chUp == 0
+    assert tvObj.channel == 0
 
 def test_getCh():
     #ARRANGE
@@ -82,7 +83,7 @@ def test_volUp():
     tvObj = Television() 
 
     #ACT
-    tvObj.getCh()
+    tvObj.volUp()
 
     #ASSERT
     assert tvObj.volume == 11
@@ -101,8 +102,7 @@ def test_mute():
     tvObj = Television()
    
     #ACT
-    tvObj.mute = True
-    tvObj.mute()
+    tvObj.toggleMute()
 
     #ASSERT
     assert tvObj.mute == True
