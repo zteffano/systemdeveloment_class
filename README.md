@@ -13,5 +13,5 @@ From: http://dkexit.eu/pbi/site/ch19s11.html
 
 #### Exercise 20.4.1 (Restful api test):
 From: http://dkexit.eu/pbi/site/ch20s04.html  
-/exercise_20_4_1/test_myapi.py => Test file (using pytest)
-/exercise_20_4_1/my_api.py => Class to handle API & Pass tests
+/exercise_20_4_1/test_myapi.py => Test file (using pytest)  
+/exercise_20_4_1/my_api.py => Class to handle API & Passing all tests
