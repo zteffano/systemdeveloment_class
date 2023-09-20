@@ -1,7 +1,7 @@
 from my_api import MyAPI
 
 """
-TEST AF REST API
+TEST OF REST API WITH PYTEST
 
 ROUTES:
     /register - POST
