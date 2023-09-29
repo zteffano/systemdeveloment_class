@@ -22,7 +22,7 @@ def server():
     print("serving at port", PORT)
     thread = threading.Thread(target=httpd.serve_forever)
     thread.start()
-    yield  # før yield = setup fasen  - yield pauser så instruktionerne og lader mig køre alle test pga.(scope='module') og efter yield ("teardown fasen")
+    yield  # yield pauser instruktionerne og lader mig køre alle test pga.(scope='module') derefter ("teardown fasen")
     httpd.shutdown()
     thread.join()
 
@@ -30,7 +30,8 @@ def server():
 @pytest.fixture
 def driver():
     _driver = webdriver.Chrome() # brug webdriver.Firefox() hvis Firefox ønskes eller ligeledes ved de andre.
-    yield _driver # pauser min driver og når testen er ovre , så fortsætter den til .quit (denne kører kun per funktion, da det er default scope)
+    #_driver = webdriver.Firefox()
+    yield _driver # pauser min driver og indtil testen er ovre , så fortsætter den til .quit (denne kører kun per funktion, da det er default scope)
     _driver.quit()
 
 
@@ -89,6 +90,7 @@ def test_div(server,driver):
     assert "2/1" == do_operation(driver,"div","1")
 
 def test_invert(server,driver):
+    driver.get(URL)
     assert "2/1" == do_operation(driver, "invert","1/2")
     assert "1/2" == do_operation(driver, "invert") # invert på aktuel værdi, når der ingen 3 argument er givet
     assert "-2/1" == do_operation(driver, "invert", "-1/2")

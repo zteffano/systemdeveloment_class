@@ -58,7 +58,10 @@ function doOperation(btnName) {
                     currentRational = currentRational[btnName]();
                 } else {
                     currentRational = Rational.fromString(inputField.value)[btnName]();
+                    calcLog = [[inputField.value,""]]
+    
                 }
+                calcLog.push([" & ",btnName]);
                 break;
             case "clear":
                 currentRational = null;
@@ -71,7 +74,7 @@ function doOperation(btnName) {
     }
     else {
         currentRational = Rational.fromString(inputField.value)
-        calcLog.push(["=>",currentRational.toString()])
+        calcLog.push(["",currentRational.toString()])
     }
     updateCurrentValue(); // opdaterer vores current value felt efter hver operation
 }
@@ -83,6 +86,6 @@ function updateCurrentValue() {
     } else {
         currentValue.textContent = ""; // min default
     }
-
-    log.textContent = calcLog.map((item) => item.join(" ")).join(" "); // vi joiner vores log array, og smider den ud i vores log felt
+    // vi joiner vores log array hvis den har indhold, og smider den ud i vores log felt - ellers paster vi blot en tom string
+    log.textContent = calcLog.length > 0? calcLog.map((item) => item.join(" ")).join(" ") + " = ":""; 
 }   
