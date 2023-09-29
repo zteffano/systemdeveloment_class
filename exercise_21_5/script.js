@@ -1,156 +1,88 @@
-/*
- * Example Rational as js
- */
-class Rational {
-    constructor(numerator, denominator) {
-        if (denominator === undefined) {
-            this.denominator = 1;
-        } else {
-            this.denominator = parseInt(denominator);
-        }
-        this.numerator = parseInt(numerator);
-    }
+'use strict'
+import { Rational } from "./Rational.js";
 
-    add(other) {
-        let new_num = this.numerator * other.denominator + other.numerator * this.denominator;
-        let new_den = this.denominator * other.denominator;
-        return new Rational(new_num,new_den).reduce();
-    }
+const inputField = document.querySelector("#input-field"); // vores input felt
+const currentValue = document.getElementById("current-value"); // vores current value felt, som bedre viser den sum vi arbejder med
+const log = document.getElementById("log");
 
-    sub(other) {
-        let new_num = this.numerator * other.denominator - other.numerator * this.denominator;
-        let new_den = this.denominator * other.denominator;
-        console.log(new_num, new_den);
-        return new Rational(new_num, new_den).reduce();
-    }
-
-    mul(other) {
-        let new_num = this.numerator * other.numerator;
-        let new_den = this.denominator * other. denominator;
-        return new Rational(new_num, new_den).reduce();
-    }
-
-    div(other) {
-        let new_num = this.numerator * other.denominator;
-        let new_den = this.denominator * other.numerator;
-        return new Rational(new_num, new_den).reduce();
-    }
-
-    invert() {
-        return new Rational(this.denominator, this.numerator);
-    }
-
-    negate() {
-        return new Rational(-this.numerator, this.denominator);
-    }
-
-    reduce() {
-        let gcd = this.gcd(this.numerator, this.denominator);
-        return new Rational(this.numerator / gcd, this.denominator / gcd);
-    }
-
-    toString() {
-        if (this.numerator === 0 || this.denominator === 0) {
-            return "0";
-        }
-        return `${this.numerator}/${this.denominator}`;
-    }
-    gcd (a, b) {
-        return (b) ? this.gcd(b, a % b) : a;
-    }
+const buttonIds = ["add", "sub", "mul", "div", "invert", "reduce", "negate", "clear"]; // ID på vores knapper
+const btnArray = buttonIds.map(id => document.getElementById(id)); // laver et array med alle vores knapper, i stedet for at lave dem enkeltvis
+var currentRational = null;
+let calcLog = [];
 
 
-    
-    // todo
-
-}
-
-const inputField = document.querySelector("#input-field");
-const addBtn = document.getElementById("add");
-const subBtn = document.getElementById("sub");
-const multBtn = document.getElementById("mul");
-const divBtn = document.getElementById("div");
-const invBtn = document.getElementById("invert");
-const reduceBtn = document.getElementById("reduce");
-const negBtn = document.getElementById("negate");
-//const testBtn = document.getElementById("test");
-const clearBtn = document.getElementById("clear");
-const currentValue = document.getElementById("current-value");
-// mangler EQ => equal btn + logic + element
-
-const btnArray = [addBtn,subBtn,multBtn,divBtn,invBtn,reduceBtn,negBtn,clearBtn];
-var tempRational = null;
-
-
-btnArray.forEach((btn) => {
-    btn.addEventListener("click", ()=> {
-        if (tempRational != null || btn.id == "clear" || btn.id == "invert" || btn.id == "reduce" || btn.id == "negate") {
-           // laver til en sperat funktion senere
-            switch(btn.id) {
-
-                case "add":
-                    inputField.value = tempRational.add(makeRational(inputField.value)).toString();
-                    updateCurrentValue(inputField.value);
-                    break;
-                case "sub":
-                    inputField.value = tempRational.sub(makeRational(inputField.value)).toString();
-                    updateCurrentValue(inputField.value);
-                    break;
-                case "mul":
-                    inputField.value = tempRational.mul(makeRational(inputField.value)).toString();
-                    updateCurrentValue(inputField.value);
-                    break;
-                case "div":
-                    inputField.value = tempRational.div(makeRational(inputField.value)).toString();
-                    updateCurrentValue(inputField.value);
-                    break;
-                case "invert":
-                    inputField.value = makeRational(inputField.value).invert().toString();
-                    tempRational = inputField.value;
-                    updateCurrentValue(inputField.value);
-                    break;
-                case "reduce":
-                    inputField.value = makeRational(inputField.value).reduce().toString();
-                    tempRational = inputField.value;
-                    updateCurrentValue(inputField.value);
-                    break;
-                case "negate":
-                    inputField.value = makeRational(inputField.value).negate().toString();
-                    tempRational = inputField.value;
-                    updateCurrentValue(inputField.value);
-                    break;
-                case "clear":
-                    tempRational = null;
-                    inputField.value = "";
-                    updateCurrentValue(inputField.value);
-                    break;
-                default:
-                    alert("Something went wrong");
-                    break;
-            }
-    
-        }
-        else {
-            console.log("No tempRational! - adding this");
-            tempRational = makeRational(inputField.value);
-            updateCurrentValue(inputField.value);
-        }
+btnArray.forEach((button) => {
+    button.addEventListener("click", ()=> {
+        doOperation(button.id)
     })
-});
+})
 
-function makeRational(inputString) {
 
-    if (inputString.length > 5 || inputString.length < 1) {
-        alert("Wrong format - use  5/5 or 5");
-        return;
+function doOperation(btnName) {
+
+
+    if (currentRational !== null || btnName == "clear" || btnName == "invert" || btnName == "reduce" || btnName == "negate") {
+        console.log(`performing a ${btnName} on ${currentRational? currentRational.toString():inputField.value}`);
+        let inputRational;
+        switch (btnName) {
+            
+            case "add":
+                inputRational = Rational.fromString(inputField.value);
+                currentRational = currentRational.add(Rational.fromString(inputField.value));
+                calcLog.push(["+",inputRational.toString()])
+                break;
+            case "sub":
+                inputRational = Rational.fromString(inputField.value);
+                currentRational = currentRational.sub(Rational.fromString(inputField.value));
+                calcLog.push(["-",inputRational.toString()])
+                break;
+
+            case "mul":
+                inputRational = Rational.fromString(inputField.value);
+                currentRational = currentRational.mul(Rational.fromString(inputField.value));
+                calcLog.push(["*",inputRational.toString()])
+                break;
+
+            case "div":
+                inputRational = Rational.fromString(inputField.value);
+                currentRational = currentRational.div(Rational.fromString(inputField.value));
+                calcLog.push(["/",inputRational.toString()])
+                break;
+
+            case "invert":
+            case "reduce":
+            case "negate":
+                // Bare lidt sjovt JS lir, hvor jeg via bracket notation kan tilgå metoderne i Rational, da de er af samme navn
+                //...Dette kunne også gøres ovenover
+                if (inputField.value == "") {
+                    currentRational = currentRational[btnName]();
+                } else {
+                    currentRational = Rational.fromString(inputField.value)[btnName]();
+                }
+                break;
+            case "clear":
+                currentRational = null;
+                calcLog = [];
+                break;
+            default:
+                console.log("Default switch ")
+                break;
+        }
     }
-    let splitted = inputString.split("/")
-    let numerator = splitted[0];
-    let denominator = splitted[1]
-    return new Rational(numerator, denominator);
-    //alert(`Numerator: ${numerator} Denominator: ${denominator}`);
+    else {
+        currentRational = Rational.fromString(inputField.value)
+        calcLog.push(["=>",currentRational.toString()])
+    }
+    updateCurrentValue(); // opdaterer vores current value felt efter hver operation
 }
 
-function updateCurrentValue(input) {
-    currentValue.innerHTML = input;
-}
+function updateCurrentValue() {
+    if (currentRational !== null) {
+        currentValue.textContent = currentRational.toString();
+        inputField.value = "";
+    } else {
+        currentValue.textContent = ""; // min default
+    }
+
+    log.textContent = calcLog.map((item) => item.join(" ")).join(" "); // vi joiner vores log array, og smider den ud i vores log felt
+}   
