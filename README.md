@@ -18,4 +18,4 @@ From: http://dkexit.eu/pbi/site/ch20s04.html
 
 #### Exercise 21.5 (Rational(JS) pytest with Selenium) 
 From: http://dkexit.eu/pbi/site/ch21s05.html  
-(Work in progress)  
+/exercise_21_5/ => Test  + Webpage & Rational(JS) to pass all test.
