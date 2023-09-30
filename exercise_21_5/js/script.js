@@ -87,5 +87,5 @@ function updateCurrentValue() {
         currentValue.textContent = ""; // min default
     }
     // vi joiner vores log array hvis den har indhold, og smider den ud i vores log felt - ellers paster vi blot en tom string
-    log.textContent = calcLog.length > 0? calcLog.map((item) => item.join(" ")).join(" ") + " = ":""; 
+    log.textContent = calcLog.length > 0? calcLog.map((item) => item.join(" ")).join(" ") + " = "+ currentRational.toString():""; 
 }   
