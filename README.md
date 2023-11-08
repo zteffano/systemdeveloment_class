@@ -15,3 +15,7 @@ From: http://dkexit.eu/pbi/site/ch19s11.html
 From: http://dkexit.eu/pbi/site/ch20s04.html  
 /exercise_20_4_1/test_myapi.py => Test file (using pytest)  
 /exercise_20_4_1/my_api.py => Class to handle API & Passing all tests
+
+#### Exercise 21.5 (Rational(JS) pytest with Selenium) 
+From: http://dkexit.eu/pbi/site/ch21s05.html  
+/exercise_21_5/ => Test  + Webpage & Rational(JS) to pass all test.
